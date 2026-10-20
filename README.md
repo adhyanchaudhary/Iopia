@@ -1,6 +1,6 @@
 # Iopia — See the idea
 
-A frontend-only product demonstration built with React, TypeScript, Vite, Lucide, and animated SVG. No backend, accounts, API calls, AI generation, or video files. Fonts are bundled locally.
+A frontend-only product demonstration built with React, TypeScript, Vite, Motion for React, Lucide, and animated SVG. The entire interface uses a light paper, sage, yellow, and coral palette inspired by the supplied HTML. No backend, accounts, API calls, AI generation, or video files. Fonts are bundled locally.
 
 ## Run locally
 
@@ -24,8 +24,8 @@ npm run preview
 1. Scroll through the landing page. The desktop process showcase moves horizontally with normal vertical scrolling; mobile and reduced-motion layouts use a normal horizontally scrollable row.
 2. Enter any topic or select an example and press Enter. Every topic opens **Activation Functions: How Neural Networks Bend Space** after a simulated 4.1-second introduction. Skip and replay are available.
 3. The 60-second lesson starts automatically, except with reduced motion. Play/pause, restart, seeking, scene navigation, captions, speed, and expanded view are functional.
-4. Open **Explore the Math** to compare ReLU, sigmoid, and tanh at a shared input. Leaving the lesson for another tool pauses playback.
-5. Ask the simulated tutor a question. Responses use local keyword matching, not a model. Notes can be saved in browser storage or downloaded as text. Complete the three-question quiz for scored feedback.
+4. Companion notes are visible beside the lesson by default. Open **Explore the Math** or **Knowledge check** in the notes pane to pause playback and explore; the video stays visible. On phones the notes stack below the player.
+5. Activate the floating **Ask Iopia** bubble to open the companion. It starts closed, overlays the page without compressing the video or notes, and closes with the bubble, close button, or Escape. Responses use local keyword matching, not a model. Notes can be saved in browser storage or downloaded as text. Complete the three-question quiz for scored feedback.
 
 The coding workspace and personalized learning paths shown on the landing page are product concepts, not implemented tools. References are explicitly mock suggestions, not retrieved sources. There is no voiceover; captions provide the silent presentation.
 
@@ -59,12 +59,12 @@ The browser tests exercise the prompt transition, deterministic seeking, playbac
 - `src/lesson/data.ts`: fixed scenes, captions, quiz, and tutor explanations.
 - `src/lesson/usePlayback.ts`: playback clock and transport state.
 - `src/lesson/math.js`: shared activation and classification model, covered by unit tests.
-- `src/styles.css`: responsive visual design and reduced-motion fallbacks.
+- `src/styles.css`: light-only responsive visual design and reduced-motion fallbacks. Motion for React drives spring hover effects, landing reveals, an ambient orbit, and tutor enter/exit transitions; CSS supplies particles and floating detail.
 
 ## Logo and reference
 
-The original uploaded `iopia.html` remains untouched outside this checkout. Its canvas, chapters, contextual tutor, notes, and quiz informed the new workspace.
+The original uploaded `iopia.html` remains untouched outside this checkout. Its side-by-side video and scrolling notes, floating on-demand tutor bubble, chapters, paper background, sage surfaces, yellow equations, and coral accents guide the revised workspace.
 
-The logo shown inline in chat was not supplied as a downloadable file. The current `Logo` component uses a **temporary blue–violet vector book/play mark**, not the original artwork. Replace that component's vector with the original image asset when it is available. No replacement or altered version of the original logo is claimed.
+The logo shown inline in chat was not supplied as a downloadable file. The current `Logo` component uses a **temporary sage vector book/play mark**, not the original artwork. Replace that component's vector with the original image asset when it is available. No replacement or altered version of the original logo is claimed.
 
 Setup and build commands do not create commits or push changes. Use the existing isolated checkout; no Git worktree is required.
