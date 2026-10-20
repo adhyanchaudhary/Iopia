@@ -1,70 +1,350 @@
-# Iopia — See the idea
+# IOPIA --- Learn Smarter. Understand Deeper. Improve Continuously.
 
-A frontend-only product demonstration built with React, TypeScript, Vite, Motion for React, Lucide, and animated SVG. The entire interface uses a light paper, sage, yellow, and coral palette inspired by the supplied HTML. No backend, accounts, API calls, AI generation, or video files. Fonts are bundled locally.
+**An AI-powered adaptive learning platform that turns learning gaps into
+the next learning opportunity.**
 
-## Run locally
+IOPIA is designed to combine AI-generated lessons, interactive visual
+explanations, contextual tutoring, and concept-level assessment. Its
+central idea is simple:
 
-Use Node.js 22 or newer (validated with Node 24).
+> **Your mistakes become the blueprint for your next lesson.**
 
-```sh
-cd /workspace/Iopia
-npm ci --cache /workspace/.npm-cache --no-audit --no-fund
-npm run dev
+## The Problem
+
+Traditional digital learning often gives learners the same videos,
+notes, and assessments regardless of their prior knowledge or individual
+difficulties.
+
+-   Complex concepts can be difficult to understand through text alone.
+-   Learning paths are often generic rather than personalized.
+-   Learners need explanations that respond to their specific doubts.
+-   Quiz mistakes do not always lead to targeted practice.
+
+IOPIA aims to connect learning content, assessment, and remediation in
+one continuous cycle.
+
+## How IOPIA Works
+
+**Explore → Understand → Assess → Adapt → Improve**
+
+1.  **Choose a topic:** A learner enters a subject or learning goal.
+2.  **Research:** The TinyFish integration is intended to discover
+    relevant web sources and retrieve selected content.
+3.  **Generate:** An AI model turns retrieved material into structured
+    explanations and examples.
+4.  **Explore:** Learners engage with visual and interactive lesson
+    content.
+5.  **Assess:** Concept-tagged quizzes evaluate understanding.
+6.  **Adapt:** Incorrect answers can guide targeted explanations and
+    follow-up practice.
+7.  **Track:** Concept-level results can help learners see their
+    progress.
+
+## Key Features
+
+### Adaptive learning loop
+
+A wrong answer can reveal a concept that needs a different explanation,
+another example, or more practice. IOPIA aims to use that signal to
+guide the next learning step.
+
+### Interactive explanations
+
+The platform is designed to support diagrams, animations, equations, and
+interactive browser-rendered content where appropriate.
+
+### Contextual AI tutoring
+
+Learners should be able to ask questions about the current material and
+receive explanations tied to the topic they are studying.
+
+### Research-informed content
+
+The planned TinyFish integration gathers relevant external information
+before lesson generation. Retrieved information still needs validation;
+search alone does not guarantee accuracy.
+
+### Concept-level assessment
+
+Questions can be associated with the concepts they test so that results
+can guide targeted remediation.
+
+## TinyFish Integration
+
+TinyFish is intended to serve as IOPIA's **web research and
+information-retrieval layer**. The proposed IOPIA design assigns three
+functional roles:
+
+  -----------------------------------------------------------------------
+  Role                                Responsibility
+  ----------------------------------- -----------------------------------
+  **Research Agent**                  Discovers relevant learning
+                                      resources and retrieves content
+                                      from selected webpages.
+
+  **Verification Agent**              Supports checks for source
+                                      credibility, conflicting
+                                      information, and consistency
+                                      between claims and sources.
+
+  **Monitoring Agent**                Supports identifying updated
+                                      information and changes in sources
+                                      used for learning content.
+  -----------------------------------------------------------------------
+
+These are proposed responsibilities in IOPIA, not a claim that TinyFish
+itself provides three separate built-in agents.
+
+### Intended research pipeline
+
+``` text
+Learner topic
+    ↓
+TinyFish Search
+    ↓
+Discover candidate sources
+    ↓
+Select sources and retrieve content with TinyFish Fetch
+    ↓
+Validate content and retain source metadata
+    ↓
+AI lesson generation
+    ↓
+Interactive learning material
 ```
 
-Open the development server address printed by Vite in your local browser. For a production build:
+Source links can be retained for traceability. Verification remains
+important because retrieval by itself does not guarantee factual
+accuracy.
 
-```sh
-npm run build
-npm run preview
-```
+## Technical Architecture
 
-## Present the demo
+IOPIA is planned as a modular application with separate responsibilities
+for the interface, AI orchestration, research, assessment, and data
+storage.
 
-1. Scroll through the landing page. The desktop process showcase moves horizontally with normal vertical scrolling; mobile and reduced-motion layouts use a normal horizontally scrollable row.
-2. Enter any topic or select an example and press Enter. Every topic opens **Activation Functions: How Neural Networks Bend Space** after a simulated 4.1-second introduction. Skip and replay are available.
-3. The 60-second lesson starts automatically, except with reduced motion. Play/pause, restart, seeking, scene navigation, captions, speed, and expanded view are functional.
-4. Companion notes are visible beside the lesson by default. Open **Explore the Math** or **Knowledge check** in the notes pane to pause playback and explore; the video stays visible. On phones the notes stack below the player.
-5. Activate the floating **Ask Iopia** bubble to open the companion. It starts closed, overlays the page without compressing the video or notes, and closes with the bubble, close button, or Escape. Responses use local keyword matching, not a model. Notes can be saved in browser storage or downloaded as text. Complete the three-question quiz for scored feedback.
+  -----------------------------------------------------------------------
+  Layer                   Purpose                 Proposed technologies
+  ----------------------- ----------------------- -----------------------
+  Frontend                Lessons, quizzes, and   React, Next.js,
+                          learner interface       TypeScript, Tailwind
+                                                  CSS
 
-The coding workspace and personalized learning paths shown on the landing page are product concepts, not implemented tools. References are explicitly mock suggestions, not retrieved sources. There is no voiceover; captions provide the silent presentation.
+  API layer               Secure application      Next.js server routes /
+                          requests and service    API endpoints
+                          communication           
 
-## Mathematical model
+  AI orchestration        Lesson generation,      LLM API, structured
+                          tutoring, adaptive      prompts, Zod
+                          explanations            
 
-The lesson has one authoritative `requestAnimationFrame` playback clock. Renderers derive their entire visual state from its time, so backward seeking reproduces the same frame. The five scene intervals are [0,10), [10,20), [20,35), [35,50), [50,60]. Reduced motion shows a static representative illustration per scene and disables ambient motion.
+  Research                Search and retrieval of TinyFish Search and
+                          selected sources        Fetch
 
-The ReLU plot is an element-wise activation graph. The neighboring surface is explicitly a derived height plot, `ReLU(x₁) + ReLU(x₂)`, rather than a claim that the input plane uniformly bends. The classification example uses fixed illustrative weights: four ReLU features produce `h(x) = |x₁| + |x₂|`; thresholding at 1.6 gives a diamond boundary in original input space. Both displayed classes are separated by that threshold; this does not imply a single ReLU can separate arbitrary datasets. The scene names use “linear layers” conversationally, while equations and explanations identify the maps with biases as affine.
+  Interactive rendering   Visual content and      HTML, CSS, SVG, KaTeX
+                          mathematical notation   
 
-## Validation
+  Assessment              Quiz scoring and        Rules-based scoring and
+                          concept mapping         concept tags
 
-```sh
-npm test
-npm run build
-npx playwright install chromium
-npm run test:e2e
-```
+  Data                    Progress, lesson         PostgreSQL
+                          metadata, assessment    
+                          history                 
 
-On this cloud machine, Chromium is already installed; use:
+  Deployment              Application hosting      Netlify
+  -----------------------------------------------------------------------
 
-```sh
-PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium npm run test:e2e
-```
+**Architecture principles** - Keep research, generation, assessment, and
+rendering modular. - Validate model outputs before displaying them. -
+Keep API keys and privileged operations on the server. - Preserve source
+URLs and useful metadata. - Render validated content through known
+components; do not execute arbitrary generated code. - Start with one
+complete learning loop before expanding the product.
 
-The browser tests exercise the prompt transition, deterministic seeking, playback and pause, captions, speed, restart, activation calculations, note saving/download, tutor replies, quiz completion, replay, mobile navigation, reduced motion, and absence of external runtime requests. The test server runs on port 5174.
+## Target Audience
 
-## Project layout
+-   **School students (Classes 6--12):** Clear explanations, exam
+    preparation, and self-paced learning.
+-   **Undergraduate students:** Support for complex topics, coursework,
+    and assignments.
+-   **Professionals and job seekers:** Industry-relevant skills and
+    upskilling.
+-   **Lifelong learners:** Self-paced exploration of personal interests.
+-   **Educators and trainers:** Potential support for creating
+    explanations and resources for diverse learners.
 
-- `src/App.tsx`: landing page, transition, workspace, and supporting tools.
-- `src/components/Visuals.tsx`: vector identity and real-time SVG diagrams.
-- `src/lesson/data.ts`: fixed scenes, captions, quiz, and tutor explanations.
-- `src/lesson/usePlayback.ts`: playback clock and transport state.
-- `src/lesson/math.js`: shared activation and classification model, covered by unit tests.
-- `src/styles.css`: light-only responsive visual design and reduced-motion fallbacks. Motion for React drives spring hover effects, landing reveals, an ambient orbit, and tutor enter/exit transitions; CSS supplies particles and floating detail.
+### Prerequisites
 
-## Logo and reference
+-   Node.js LTS
+-   npm, pnpm, or the package manager used by the repository
+-   Credentials for any external services enabled in the project
 
-The original uploaded `iopia.html` remains untouched outside this checkout. Its side-by-side video and scrolling notes, floating on-demand tutor bubble, chapters, paper background, sage surfaces, yellow equations, and coral accents guide the revised workspace.
+### Installation
 
-The logo shown inline in chat was not supplied as a downloadable file. The current `Logo` component uses a **temporary sage vector book/play mark**, not the original artwork. Replace that component's vector with the original image asset when it is available. No replacement or altered version of the original logo is claimed.
+1.  Clone the repository:
 
-Setup and build commands do not create commits or push changes. Use the existing isolated checkout; no Git worktree is required.
+    ``` bash
+    git clone <YOUR_GITHUB_REPOSITORY_URL>
+    cd <REPOSITORY_DIRECTORY>
+    ```
+
+2.  Install dependencies if this is a Node.js project:
+
+    ``` bash
+    npm install
+    ```
+
+3.  Create a local environment file:
+
+    ``` bash
+    cp .env.example .env.local
+    ```
+
+    If `.env.example` does not exist, create `.env.local` using the
+    actual variables required by the code.
+
+4.  Add the required credentials locally. Do not commit secrets.
+
+5.  If the project uses Next.js and defines the usual development
+    script, run:
+
+    ``` bash
+    npm run dev
+    ```
+
+6.  Open the local URL printed by the development server, commonly
+    `http://localhost:3000`.
+
+## Configuration
+
+The following names are examples for planning and must be aligned with
+the implemented clients:
+
+  ---------------------------------------------------------------------------------
+  Variable                          Purpose                 Required when
+  --------------------------------- ----------------------- -----------------------
+  `TINYFISH_API_KEY`                Authenticates TinyFish  TinyFish integration is
+                                    requests                enabled
+
+  `LLM_API_KEY`                     Authenticates the       AI generation or
+                                    selected language-model tutoring is enabled
+                                    provider                
+
+  `NEXT_PUBLIC_SUPABASE_URL`        Supabase project URL    Supabase is used
+
+  `NEXT_PUBLIC_SUPABASE_ANON_KEY`   Browser-safe Supabase   Supabase client
+                                    client key              integration is enabled
+
+  `SUPABASE_SERVICE_ROLE_KEY`       Privileged server-side  A server workflow
+                                    database access         specifically requires
+                                                            it
+  ---------------------------------------------------------------------------------
+
+### Security
+
+-   Never commit `.env.local`, API keys, tokens, or database
+    credentials.
+-   Keep privileged keys on the server and out of browser bundles.
+-   Use the minimum permissions required.
+-   Validate external and model-generated data before using it.
+-   Check `.gitignore` before pushing.
+
+## Development Roadmap
+
+  -----------------------------------------------------------------------
+  Phase                   Focus                   Intended result
+  ----------------------- ----------------------- -----------------------
+  1 --- Research          Search, retrieve        Research pipeline for
+                          selected content,       one topic
+                          retain source links     
+
+  2 --- Generate          Create a structured     Consistent lesson
+                          lesson from retrieved   format
+                          information             
+
+  3 --- Teach             Render accessible,      Usable learning
+                          interactive material    experience
+
+  4 --- Assess            Generate concept-tagged Concept-level feedback
+                          questions and evaluate  
+                          responses               
+
+  5 --- Adapt             Identify weak concepts  Complete adaptive loop
+                          and generate targeted   
+                          follow-up content       
+
+  6 --- Evaluate          Test relevance,         Evidence about system
+                          quality, alignment, and quality
+                          reliability             
+  -----------------------------------------------------------------------
+
+The first milestone should be one complete end-to-end learning loop,
+rather than many disconnected features.
+
+## Evaluation
+
+IOPIA should be evaluated with measurable checks rather than assumptions
+about learning outcomes:
+
+-   **Source relevance:** Do retrieved sources address the learner's
+    topic?
+-   **Content quality:** Are explanations clear and supported by
+    suitable evidence?
+-   **Assessment alignment:** Do quiz questions test the concepts
+    taught?
+-   **Adaptation quality:** Do follow-up explanations address identified
+    misconceptions?
+-   **Learning improvement:** Do learners improve on follow-up questions
+    about previously weak concepts?
+-   **Usability:** Can learners navigate the experience without
+    unnecessary friction?
+
+## Future Scope and Impact
+
+### Planned capabilities
+
+-   Multilingual explanations and localized learning.
+-   More advanced personalization of difficulty, pace, and teaching
+    style.
+-   Interactive simulations and richer visual lessons.
+-   Smarter tutoring with alternative explanations.
+-   Source freshness workflows and content monitoring.
+-   Learning analytics for concept mastery and recurring misconceptions.
+-   Accessibility improvements for diverse learning needs.
+
+### Intended impact
+
+-   Help learners identify and work through specific knowledge gaps.
+-   Make difficult concepts easier to explore visually.
+-   Give educators potential support for creating alternative
+    explanations.
+-   Support self-paced academic, professional, and personal learning.
+-   Connect mistakes to meaningful next steps.
+
+These are intended capabilities and outcomes. Their actual impact should
+be evaluated through user testing and learning measures.
+.
+
+## Contributing
+
+Suggestions and contributions can help improve IOPIA.
+
+1.  Review the current project status and open issues.
+2.  Create a branch for a focused change.
+3.  Keep changes modular and document relevant configuration.
+4.  Test changes before opening a pull request.
+5.  Never include credentials, private user data, or secrets in commits.
+
+Add links to contribution guidelines or issue templates here if they are
+created.
+
+## Vision
+
+IOPIA aims to make learning more responsive: understand what the learner
+needs, explain it in a useful way, evaluate understanding, and use the
+result to decide what comes next.
+
+**IOPIA --- Learn smarter. Understand deeper. Keep improving.**
+
+*Better learning begins when the next lesson responds to what the
+learner actually needs.*
