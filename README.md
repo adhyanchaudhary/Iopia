@@ -184,8 +184,8 @@ complete learning loop before expanding the product.
 1.  Clone the repository:
 
     ``` bash
-    git clone <YOUR_GITHUB_REPOSITORY_URL>
-    cd <REPOSITORY_DIRECTORY>
+    git clone https://github.com/adhyanchaudhary/Iopia
+    cd iopia
     ```
 
 2.  Install dependencies if this is a Node.js project:
@@ -212,8 +212,7 @@ complete learning loop before expanding the product.
     npm run dev
     ```
 
-6.  Open the local URL printed by the development server, commonly
-    `http://localhost:3000`.
+6.  Open the local URL printed by the development server
 
 ## Configuration
 
@@ -335,8 +334,6 @@ Suggestions and contributions can help improve IOPIA.
 4.  Test changes before opening a pull request.
 5.  Never include credentials, private user data, or secrets in commits.
 
-Add links to contribution guidelines or issue templates here if they are
-created.
 
 ## Vision
 
