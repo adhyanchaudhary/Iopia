@@ -1,0 +1,20 @@
+export const scenes = [
+ {start:0,end:10,title:'The world starts linear.',short:'A world of straight lines',caption:'A linear layer can rotate, stretch, and shift space. But straight structures remain straight.',equation:'y = Wx + b',note:'An affine transformation changes the coordinates, while keeping straight lines straight.'},
+ {start:10,end:20,title:"More layers. Same limitation.",short:'The linear limitation',caption:'Even stacking linear layers cannot create genuine nonlinearity. Together, they are still one affine mapping.',equation:'W₂(W₁x + b₁) + b₂ = W′x + b′',note:'W′ = W₂W₁ and b′ = W₂b₁ + b₂. Depth alone does not introduce nonlinearity.'},
+ {start:20,end:35,title:'Meet nonlinearity.',short:'Enter the activation',caption:'An activation changes how features map through the network. ReLU clips negative values, introducing the nonlinearity that linear layers lack.',equation:'ReLU(z) = max(0, z)',note:'ReLU is applied to each feature separately. Positive values pass through; negative values become zero.'},
+ {start:35,end:50,title:'A new way to separate.',short:'Beyond a straight boundary',caption:'With nonlinear activations and learned weights, networks can build piecewise-linear decision boundaries that separate patterns a single linear model cannot.',equation:'h(x) = |x₁| + |x₂|',note:'This fixed illustrative ReLU network uses h = ReLU(x₁) + ReLU(−x₁) + ReLU(x₂) + ReLU(−x₂). The contour h = 1.6 is a diamond in input space.'},
+ {start:50,end:60,title:'Learn a new representation.',short:'The bigger picture',caption:"Neural networks don’t just find patterns. They learn representations.",equation:'Affine maps + nonlinear activations = expressive networks',note:'Learned affine layers and nonlinear activations work together. A single ReLU is not enough to separate every possible dataset.'}
+];
+export const questions = [
+ {q:'Why do neural networks need nonlinear activation functions?',options:['To increase the number of parameters','To represent nonlinear relationships','To eliminate matrix multiplication','To make every output positive'],answer:1,explanation:'Nonlinear activations let the network represent functions that cannot be reduced to a single affine map.'},
+ {q:'What is ReLU(−3)?',options:['−3','3','0','0.5'],answer:2,explanation:'ReLU(z) = max(0, z), so a negative input maps to zero.'},
+ {q:'What happens when you compose two affine layers without an activation?',options:['You always get a curved boundary','You get a sigmoid function','You remove the weights','You still get one affine transformation'],answer:3,explanation:'W₂(W₁x + b₁) + b₂ = (W₂W₁)x + (W₂b₁ + b₂), which is another affine map.'}
+];
+export const suggestions = ["Why can’t linear layers bend decision boundaries?",'What does ReLU do to negative inputs?','How is sigmoid different from ReLU?'];
+export function tutorAnswer(question:string) {
+ const q=question.toLowerCase();
+ if(q.includes('sigmoid')||q.includes('tanh')) return 'Sigmoid smoothly maps any real number into (0, 1). ReLU maps negative inputs to 0 and leaves positive inputs unchanged. Unlike sigmoid, ReLU is unbounded above. Open Explore the Math to compare them at the same input.';
+ if(q.includes('negative')||q.includes('relu')) return 'ReLU(z) = max(0, z). At z = −3, the output is 0; at z = 2, it is 2. Applied element-wise, it clips each negative feature independently. That piecewise change makes the overall network nonlinear.';
+ if(q.includes('linear')||q.includes('boundar')) return 'Composing affine maps gives another affine map: W₂(W₁x + b₁) + b₂ = W′x + b′. Without nonlinear activations, more layers cannot create a nonlinear decision boundary. ReLU adds pieces that can combine into more expressive boundaries.';
+ return 'The key idea in this lesson: affine layers transform coordinates, and nonlinear activations change the representation. Together they can describe complex patterns. The diamond example uses four ReLU features with fixed illustrative weights; it is not a claim that one activation solves every dataset.';
+}
